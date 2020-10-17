@@ -1,6 +1,6 @@
 //WAITS FOR PAGE TO LOAD BEFORE DOING WHAT'S BELOW
 document.addEventListener('DOMContentLoaded',function() { 
-    //GETITNG WATCHLIST FROM LOCALSTORAGE
+    //GETTINGNG WATCHLIST FROM LOCALSTORAGE
 
   let watchlistJSON = localStorage.getItem('watchlist');
 
