@@ -1,6 +1,6 @@
 //WAITS FOR PAGE TO LOAD BEFORE DOING WHAT'S BELOW
 document.addEventListener('DOMContentLoaded',function() { 
-  //FUNCTION FOR GENERATING MOVIE CARDS
+    //FUNCTION FOR GENERATING MOVIE CARDS
     function renderMovies (movieArray) {
         movieHTML = movieArray.map(function(currentMovie){
 
@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded',function() {
                 <div class="card-body">
                   <h5 class="card-title">${currentMovie.Title}</h5>
                   <p class="card-text">${currentMovie.Year}</p>
-                  <a href="#" class="btn btn-primary">Add!</a>
+                  <button href="#" class="btn btn-primary add"  onclick="saveToWatchlist('${currentMovie.imdbID}')">Add!</button>
                 </div>
               </div>
             </div>
-            `})
+            `});
         return movieHTML.join('');
     }
     //LISTEN FOR EVENT, SHOW MOVIES
@@ -24,7 +24,22 @@ document.addEventListener('DOMContentLoaded',function() {
       document.querySelector('.movies-container').innerHTML = renderMovies(movieData); 
       event.preventDefault();
       });
-   
-});
 
-//on branch step-3
+  //FUNCTION FOR SAVING CARDS TO WATCHLIST
+  saveToWatchlist = (imdbID) => {                
+    let movie = movieData.find((currentMovie) => {            
+      return currentMovie.imdbID == imdbID;        
+    });        
+    //PULLING DOWN WATCHLIST FORM LOCAL STORAGE
+    let watchlistJSON = localStorage.getItem('watchlist'); 
+    //PARSING THE WATCHLIST WITH JSON       
+    let watchlist = JSON.parse(watchlistJSON);        
+    if (!watchlist) watchlist = [];   
+    //PUSHING MOVIE INTO THE WATCHLIST    
+    watchlist.push(movie);       
+     //TURNING WATCHLIST BACK INTO JSON
+    watchlistJSON = JSON.stringify(watchlist); 
+    //SAVING JSONIFIED WATCHLIST BACK INTO LOCAL STORAGE       
+    localStorage.setItem('watchlist', watchlistJSON);     
+    };
+});
